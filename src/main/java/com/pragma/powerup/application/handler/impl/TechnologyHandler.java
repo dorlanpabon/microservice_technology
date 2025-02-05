@@ -22,8 +22,11 @@ public class TechnologyHandler implements ITechnologyHandler {
 
     @Override
     public Mono<Void> saveTechnology(TechnologyRequestDto technologyRequestDto) {
-        Technology technology = technologyRequestMapper.toTechnology(technologyRequestDto);
-        return technologyServicePort.saveTechnology(technology);
+        return Mono.just(technologyRequestDto)
+                .map(technologyRequestMapper::toTechnology)
+                .flatMap(technologyServicePort::saveTechnology)
+                .then();
     }
+
 
 }

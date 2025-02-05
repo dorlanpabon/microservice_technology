@@ -4,28 +4,22 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
+import org.springframework.data.relational.core.mapping.Column;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-@Entity
-@Table(name = "technologies")
+@Table("technologies")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 public class TechnologyEntity {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private Long id;
+    private Long id;  // Se espera que la base de datos genere el ID de forma automática
 
-    @Column(length = 50)
+    @Column("name")
     private String name;
 
-    @Column(length = 90)
+    @Column("description")
     private String description;
 }
