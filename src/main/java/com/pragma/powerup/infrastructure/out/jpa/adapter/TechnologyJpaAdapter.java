@@ -2,7 +2,6 @@ package com.pragma.powerup.infrastructure.out.jpa.adapter;
 
 import com.pragma.powerup.domain.model.Technology;
 import com.pragma.powerup.domain.spi.ITechnologyPersistencePort;
-import com.pragma.powerup.infrastructure.out.jpa.entity.TechnologyEntity;
 import com.pragma.powerup.infrastructure.out.jpa.mapper.ITechnologyEntityMapper;
 import com.pragma.powerup.infrastructure.out.jpa.repository.ITechnologyRepository;
 import lombok.RequiredArgsConstructor;

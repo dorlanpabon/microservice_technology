@@ -5,7 +5,6 @@ import com.pragma.powerup.application.handler.ITechnologyHandler;
 import com.pragma.powerup.application.mapper.ITechnologyRequestMapper;
 import com.pragma.powerup.application.mapper.ITechnologyResponseMapper;
 import com.pragma.powerup.domain.api.ITechnologyServicePort;
-import com.pragma.powerup.domain.model.Technology;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

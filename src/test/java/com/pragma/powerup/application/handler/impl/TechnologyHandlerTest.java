@@ -5,7 +5,6 @@ import com.pragma.powerup.application.mapper.ITechnologyRequestMapper;
 import com.pragma.powerup.application.mapper.ITechnologyResponseMapper;
 import com.pragma.powerup.domain.api.ITechnologyServicePort;
 import com.pragma.powerup.domain.model.Technology;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

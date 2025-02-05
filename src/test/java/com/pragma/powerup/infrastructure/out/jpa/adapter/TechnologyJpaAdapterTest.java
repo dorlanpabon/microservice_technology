@@ -4,7 +4,6 @@ import com.pragma.powerup.domain.model.Technology;
 import com.pragma.powerup.infrastructure.out.jpa.entity.TechnologyEntity;
 import com.pragma.powerup.infrastructure.out.jpa.mapper.ITechnologyEntityMapper;
 import com.pragma.powerup.infrastructure.out.jpa.repository.ITechnologyRepository;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
