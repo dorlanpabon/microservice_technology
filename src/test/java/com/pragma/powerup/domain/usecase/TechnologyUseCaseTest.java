@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
@@ -113,5 +114,18 @@ class TechnologyUseCaseTest {
 
         verify(technologyPersistencePort, never()).findTechnologyByName(anyString());
         verify(technologyPersistencePort, never()).saveTechnology(any(Technology.class));
+    }
+
+    @Test
+    void testListTechnologies() {
+        when(technologyPersistencePort.listTechnologies(anyInt(), anyInt(), anyString())).thenReturn(Flux.just(technology));
+
+        Flux<Technology> result = technologyUseCase.listTechnologies(1, 10, "ASC");
+
+        StepVerifier.create(result)
+                .expectNext(technology)
+                .verifyComplete();
+
+        verify(technologyPersistencePort, times(1)).listTechnologies(1, 10, "ASC");
     }
 }

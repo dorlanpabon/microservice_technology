@@ -5,6 +5,7 @@ import com.pragma.powerup.domain.constants.DomainConstants;
 import com.pragma.powerup.domain.exception.DomainException;
 import com.pragma.powerup.domain.model.Technology;
 import com.pragma.powerup.domain.spi.ITechnologyPersistencePort;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public class TechnologyUseCase implements ITechnologyServicePort {
@@ -30,6 +31,11 @@ public class TechnologyUseCase implements ITechnologyServicePort {
                 .flatMap(tech -> Mono.error(new DomainException(DomainConstants.TECHNOLOGY_ALREADY_EXISTS)))
                 .switchIfEmpty(Mono.defer(() -> technologyPersistencePort.saveTechnology(technology)))
                 .then();
+    }
+
+    @Override
+    public Flux<Technology> listTechnologies(Integer page, Integer size, String direction) {
+        return technologyPersistencePort.listTechnologies(page, size, direction);
     }
 
 

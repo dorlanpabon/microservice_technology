@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
@@ -39,7 +40,6 @@ class TechnologyJpaAdapterTest {
         technologyEntity.setId(1L);
         technologyEntity.setName("name");
         technologyEntity.setDescription("description");
-
     }
 
     @Test
@@ -69,6 +69,18 @@ class TechnologyJpaAdapterTest {
 
         verify(technologyRepository, times(1)).findByName("name");
     }
-}
 
-//Generated with love by TestMe :) Please raise issues & feature requests at: https://weirddev.com/forum#!/testme
+    @Test
+    void testListTechnologies() {
+        when(technologyRepository.findBy(any())).thenReturn(Flux.just(technologyEntity));
+        when(technologyEntityMapper.toTechnology(any(TechnologyEntity.class))).thenReturn(technology);
+
+        Flux<Technology> result = technologyJpaAdapter.listTechnologies(1, 10, "ASC");
+
+        StepVerifier.create(result)
+                .expectNext(technology)
+                .verifyComplete();
+
+        verify(technologyRepository, times(1)).findBy(any());
+    }
+}
