@@ -28,7 +28,7 @@ public class TechnologyUseCase implements ITechnologyServicePort {
                     return technologyPersistencePort.findTechnologyByName(tech.getName());
                 })
                 .flatMap(tech -> Mono.error(new DomainException(DomainConstants.TECHNOLOGY_ALREADY_EXISTS)))
-                .switchIfEmpty(technologyPersistencePort.saveTechnology(technology))
+                .switchIfEmpty(Mono.defer(() -> technologyPersistencePort.saveTechnology(technology)))
                 .then();
     }
 
