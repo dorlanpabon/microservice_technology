@@ -8,6 +8,8 @@ import com.pragma.powerup.domain.spi.ITechnologyPersistencePort;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
+
 public class TechnologyUseCase implements ITechnologyServicePort {
 
     private final ITechnologyPersistencePort technologyPersistencePort;
@@ -37,6 +39,5 @@ public class TechnologyUseCase implements ITechnologyServicePort {
     public Flux<Technology> listTechnologies(Integer page, Integer size, String direction) {
         return technologyPersistencePort.listTechnologies(page, size, direction);
     }
-
 
 }

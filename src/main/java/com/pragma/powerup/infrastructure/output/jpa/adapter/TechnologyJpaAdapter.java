@@ -1,9 +1,9 @@
-package com.pragma.powerup.infrastructure.out.jpa.adapter;
+package com.pragma.powerup.infrastructure.output.jpa.adapter;
 
 import com.pragma.powerup.domain.model.Technology;
 import com.pragma.powerup.domain.spi.ITechnologyPersistencePort;
-import com.pragma.powerup.infrastructure.out.jpa.mapper.ITechnologyEntityMapper;
-import com.pragma.powerup.infrastructure.out.jpa.repository.ITechnologyRepository;
+import com.pragma.powerup.infrastructure.output.jpa.mapper.ITechnologyEntityMapper;
+import com.pragma.powerup.infrastructure.output.jpa.repository.ITechnologyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

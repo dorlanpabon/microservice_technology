@@ -15,7 +15,6 @@ public class TechnologyPageRequestDto {
 
     @Schema(description = "Page number", example = "0")
     @NotNull
-    @Positive
     @Min(0)
     private Integer page;
 

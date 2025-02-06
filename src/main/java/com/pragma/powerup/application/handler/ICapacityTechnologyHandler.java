@@ -8,10 +8,8 @@ import reactor.core.publisher.Mono;
 
 import java.util.List;
 
-public interface ITechnologyHandler {
+public interface ICapacityTechnologyHandler {
 
-    Mono<Void> saveTechnology(TechnologyRequestDto technologyRequestDto);
-
-    Flux<TechnologyResponseDto> listTechnologies(TechnologyPageRequestDto technologyPageRequestDto);
+    Mono<Void> saveTechnologiesCapacity(Long capacityId, List<Long> technologies);
 
 }

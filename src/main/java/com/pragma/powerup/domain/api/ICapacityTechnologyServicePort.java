@@ -6,10 +6,8 @@ import reactor.core.publisher.Mono;
 
 import java.util.List;
 
-public interface ITechnologyServicePort {
+public interface ICapacityTechnologyServicePort {
 
-    Mono<Void> saveTechnology(Technology technology);
-
-    Flux<Technology> listTechnologies(Integer page, Integer size, String direction);
+    Mono<Void> saveTechnologiesCapacity(Long capacityId, List<Long> technologies);
 
 }

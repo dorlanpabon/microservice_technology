@@ -3,6 +3,7 @@ package com.pragma.powerup.infrastructure.input.rest;
 import com.pragma.powerup.application.dto.request.TechnologyPageRequestDto;
 import com.pragma.powerup.application.dto.request.TechnologyRequestDto;
 import com.pragma.powerup.application.dto.response.TechnologyResponseDto;
+import com.pragma.powerup.application.handler.ICapacityTechnologyHandler;
 import com.pragma.powerup.application.handler.ITechnologyHandler;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -17,33 +18,22 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/technology")
+@RequestMapping("/capacity-technology")
 @RequiredArgsConstructor
-public class TechnologyRestController {
+public class CapacityTechnologyRestController {
 
-    private final ITechnologyHandler technologyHandler;
+    private final ICapacityTechnologyHandler capacityTechnologyHandler;
 
-    @Operation(summary = "Add a new technology")
+    @Operation(summary = "Save technologies capacity")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Technology created", content = @Content),
-            @ApiResponse(responseCode = "409", description = "Technology already exists", content = @Content)
+            @ApiResponse(responseCode = "200", description = "Technologies capacity saved", content = @Content),
+            @ApiResponse(responseCode = "400", description = "Technologies capacity not saved", content = @Content)
     })
-    @PostMapping("/")
-    public Mono<Void> saveTechnology(@Valid @RequestBody TechnologyRequestDto technologyRequestDto) {
-        return technologyHandler.saveTechnology(technologyRequestDto).then();
+    @PostMapping("/{capacityId}/save")
+    public Mono<Void> saveTechnologiesCapacity(@PathVariable Long capacityId, @RequestBody List<Long> technologies) {
+        return capacityTechnologyHandler.saveTechnologiesCapacity(capacityId, technologies).then();
     }
-
-    @Operation(summary = "List of technologies paginated by name")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "List of technologies", content = @Content)
-    })
-    @PostMapping("/list")
-    public Flux<TechnologyResponseDto> listTechnologies(@Valid @RequestBody TechnologyPageRequestDto technologyPageRequestDto) {
-        return technologyHandler.listTechnologies(technologyPageRequestDto);
-    }
-
 }
