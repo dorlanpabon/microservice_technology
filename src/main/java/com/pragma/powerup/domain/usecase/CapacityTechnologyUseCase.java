@@ -18,20 +18,13 @@ public class CapacityTechnologyUseCase implements ICapacityTechnologyServicePort
 
     @Override
     public Mono<Void> saveTechnologiesCapacity(Long capacityId, List<Long> technologies) {
-
-        if (capacityId == null) {
-            return Mono.error(new DomainException(DomainConstants.INVALID_CAPACITY_ID));
-        }
-
-        if (technologies == null || technologies.isEmpty()) {
-            return Mono.error(new DomainException(DomainConstants.EMPTY_TECHNOLOGY_LIST));
-        }
-
-        int techSize = technologies.size();
-        if (techSize < DomainConstants.MIN_TECHNOLOGIES || techSize > DomainConstants.MAX_TECHNOLOGIES) {
-            return Mono.error(new DomainException(DomainConstants.INVALID_TECHNOLOGY_COUNT));
-        }
-
-        return capacityTechnologyPersistencePort.saveTechnologiesCapacity(capacityId, technologies);
+        return Mono.justOrEmpty(capacityId)
+                .switchIfEmpty(Mono.error(new DomainException(DomainConstants.INVALID_CAPACITY_ID)))
+                .then(Mono.justOrEmpty(technologies))
+                .filter(list -> !list.isEmpty())
+                .switchIfEmpty(Mono.error(new DomainException(DomainConstants.EMPTY_TECHNOLOGY_LIST)))
+                .filter(list -> list.size() >= DomainConstants.MIN_TECHNOLOGIES && list.size() <= DomainConstants.MAX_TECHNOLOGIES)
+                .switchIfEmpty(Mono.error(new DomainException(DomainConstants.INVALID_TECHNOLOGY_COUNT)))
+                .flatMap(validList -> capacityTechnologyPersistencePort.saveTechnologiesCapacity(capacityId, validList));
     }
 }

@@ -1,17 +1,26 @@
 package com.pragma.powerup.domain.usecase;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import com.pragma.powerup.domain.constants.DomainConstants;
+import com.pragma.powerup.domain.exception.DomainException;
+import com.pragma.powerup.domain.spi.ICapacityTechnologyPersistencePort;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-//import static org.mockito.Mockito.*;
+import reactor.core.publisher.Mono;
+import reactor.test.StepVerifier;
+
+import java.util.List;
+
+import static org.mockito.Mockito.*;
+
 class CapacityTechnologyUseCaseTest {
     @Mock
-    com.pragma.powerup.domain.spi.ICapacityTechnologyPersistencePort capacityTechnologyPersistencePort;
+    private ICapacityTechnologyPersistencePort capacityTechnologyPersistencePort;
+
     @InjectMocks
-    com.pragma.powerup.domain.usecase.CapacityTechnologyUseCase capacityTechnologyUseCase;
+    private CapacityTechnologyUseCase capacityTechnologyUseCase;
 
     @BeforeEach
     void setUp() {
@@ -19,12 +28,49 @@ class CapacityTechnologyUseCaseTest {
     }
 
     @Test
-    void testSaveTechnologiesCapacity(){
-        when(capacityTechnologyPersistencePort.saveTechnologiesCapacity(anyLong(), any(java.util.List<java.lang.Long>.class))).thenReturn(null);
+    void testSaveTechnologiesCapacity_Success() {
+        Long capacityId = 1L;
+        List<Long> technologies = List.of(1L, 2L, 3L);
 
-        reactor.core.publisher.Mono<java.lang.Void> result = capacityTechnologyUseCase.saveTechnologiesCapacity(Long.valueOf(1), java.util.List.of(Long.valueOf(1)));
-        Assertions.assertEquals(null, result);
+        when(capacityTechnologyPersistencePort.saveTechnologiesCapacity(capacityId, technologies)).thenReturn(Mono.empty());
+
+        Mono<Void> result = capacityTechnologyUseCase.saveTechnologiesCapacity(capacityId, technologies);
+
+        StepVerifier.create(result)
+                .verifyComplete();
+
+        verify(capacityTechnologyPersistencePort, times(1)).saveTechnologiesCapacity(capacityId, technologies);
     }
-}
 
-//Generated with love by TestMe :) Please raise issues & feature requests at: https://weirddev.com/forum#!/testme
+    @Test
+    void testSaveTechnologiesCapacity_InvalidCapacityId_ShouldThrowException() {
+        Mono<Void> result = capacityTechnologyUseCase.saveTechnologiesCapacity(null, List.of(1L));
+
+        StepVerifier.create(result)
+                .expectErrorSatisfies(throwable -> {
+                    assert throwable instanceof DomainException;
+                    assert ((DomainException) throwable).getMessage().equals(DomainConstants.INVALID_CAPACITY_ID);
+                })
+                .verify();
+
+        verify(capacityTechnologyPersistencePort, never()).saveTechnologiesCapacity(anyLong(), any());
+    }
+
+    @Test
+    void testSaveTechnologiesCapacity_EmptyTechnologyList_ShouldThrowException() {
+        Long capacityId = 1L;
+        List<Long> emptyList = List.of();
+
+        Mono<Void> result = capacityTechnologyUseCase.saveTechnologiesCapacity(capacityId, emptyList);
+
+        StepVerifier.create(result)
+                .expectErrorSatisfies(throwable -> {
+                    assert throwable instanceof DomainException;
+                    assert ((DomainException) throwable).getMessage().equals(DomainConstants.EMPTY_TECHNOLOGY_LIST);
+                })
+                .verify();
+
+        verify(capacityTechnologyPersistencePort, never()).saveTechnologiesCapacity(anyLong(), any());
+    }
+
+}

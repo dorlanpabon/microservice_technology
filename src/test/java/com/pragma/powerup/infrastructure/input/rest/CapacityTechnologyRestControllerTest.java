@@ -1,17 +1,24 @@
 package com.pragma.powerup.infrastructure.input.rest;
 
+import com.pragma.powerup.application.handler.ICapacityTechnologyHandler;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-//import static org.mockito.Mockito.*;
+import reactor.core.publisher.Mono;
+import reactor.test.StepVerifier;
+
+import java.util.List;
+
+import static org.mockito.Mockito.*;
+
 class CapacityTechnologyRestControllerTest {
     @Mock
-    com.pragma.powerup.application.handler.ICapacityTechnologyHandler capacityTechnologyHandler;
+    ICapacityTechnologyHandler capacityTechnologyHandler;
     @InjectMocks
-    com.pragma.powerup.infrastructure.input.rest.CapacityTechnologyRestController capacityTechnologyRestController;
+    CapacityTechnologyRestController capacityTechnologyRestController;
 
     @BeforeEach
     void setUp() {
@@ -19,12 +26,14 @@ class CapacityTechnologyRestControllerTest {
     }
 
     @Test
-    void testSaveTechnologiesCapacity(){
-        when(capacityTechnologyHandler.saveTechnologiesCapacity(anyLong(), any(java.util.List<java.lang.Long>.class))).thenReturn(null);
+    void testSaveTechnologiesCapacity() {
+        when(capacityTechnologyHandler.saveTechnologiesCapacity(anyLong(), any(List.class))).thenReturn(Mono.empty());
 
-        reactor.core.publisher.Mono<java.lang.Void> result = capacityTechnologyRestController.saveTechnologiesCapacity(Long.valueOf(1), java.util.List.of(Long.valueOf(1)));
-        Assertions.assertEquals(null, result);
+        Mono<Void> result = capacityTechnologyRestController.saveTechnologiesCapacity(1L, List.of(1L));
+
+        StepVerifier.create(result)
+                .verifyComplete();
+
+        verify(capacityTechnologyHandler, times(1)).saveTechnologiesCapacity(1L, List.of(1L));
     }
 }
-
-//Generated with love by TestMe :) Please raise issues & feature requests at: https://weirddev.com/forum#!/testme

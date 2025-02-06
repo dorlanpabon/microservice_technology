@@ -8,8 +8,6 @@ import com.pragma.powerup.domain.spi.ITechnologyPersistencePort;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.List;
-
 public class TechnologyUseCase implements ITechnologyServicePort {
 
     private final ITechnologyPersistencePort technologyPersistencePort;
@@ -20,18 +18,14 @@ public class TechnologyUseCase implements ITechnologyServicePort {
 
     @Override
     public Mono<Void> saveTechnology(Technology technology) {
-        return Mono.just(technology)
-                .flatMap(tech -> {
-                    if (tech.getName() == null || tech.getName().length() > 50) {
-                        return Mono.error(new DomainException(DomainConstants.NAME_MUST_BE_LESS_THAN_50_CHARACTERS));
-                    }
-                    if (tech.getDescription() == null || tech.getDescription().length() > 90) {
-                        return Mono.error(new DomainException(DomainConstants.DESCRIPTION_MUST_BE_LESS_THAN_90_CHARACTERS));
-                    }
-                    return technologyPersistencePort.findTechnologyByName(tech.getName());
-                })
-                .flatMap(tech -> Mono.error(new DomainException(DomainConstants.TECHNOLOGY_ALREADY_EXISTS)))
-                .switchIfEmpty(Mono.defer(() -> technologyPersistencePort.saveTechnology(technology)))
+        return Mono.justOrEmpty(technology)
+                .filter(tech -> tech.getName() != null && tech.getName().length() <= 50)
+                .switchIfEmpty(Mono.error(new DomainException(DomainConstants.NAME_MUST_BE_LESS_THAN_50_CHARACTERS)))
+                .filter(tech -> tech.getDescription() != null && tech.getDescription().length() <= 90)
+                .switchIfEmpty(Mono.error(new DomainException(DomainConstants.DESCRIPTION_MUST_BE_LESS_THAN_90_CHARACTERS)))
+                .flatMap(validTech -> technologyPersistencePort.findTechnologyByName(validTech.getName())
+                        .flatMap(existingTech -> Mono.error(new DomainException(DomainConstants.TECHNOLOGY_ALREADY_EXISTS)))
+                        .switchIfEmpty(Mono.defer(() -> technologyPersistencePort.saveTechnology(validTech))))
                 .then();
     }
 
@@ -39,5 +33,4 @@ public class TechnologyUseCase implements ITechnologyServicePort {
     public Flux<Technology> listTechnologies(Integer page, Integer size, String direction) {
         return technologyPersistencePort.listTechnologies(page, size, direction);
     }
-
 }
