@@ -15,7 +15,7 @@ import org.springframework.data.relational.core.mapping.Column;
 @Setter
 public class TechnologyEntity {
     @Id
-    private Long id;  // Se espera que la base de datos genere el ID de forma automática
+    private Long id;
 
     @Column("name")
     private String name;
