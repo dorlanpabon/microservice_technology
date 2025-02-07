@@ -1,0 +1,15 @@
+package com.pragma.powerup.infrastructure.entrypoints.mapper;
+
+import com.pragma.powerup.infrastructure.entrypoints.dto.request.TechnologyRequestDto;
+import com.pragma.powerup.domain.model.Technology;
+import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
+
+@Mapper(componentModel = "spring",
+        unmappedTargetPolicy = ReportingPolicy.IGNORE,
+        unmappedSourcePolicy = ReportingPolicy.IGNORE)
+public interface ITechnologyRequestMapper {
+
+    Technology toTechnology(TechnologyRequestDto technologyRequestDto);
+
+}
