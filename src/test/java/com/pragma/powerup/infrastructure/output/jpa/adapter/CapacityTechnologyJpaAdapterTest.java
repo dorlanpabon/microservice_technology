@@ -3,7 +3,6 @@ package com.pragma.powerup.infrastructure.output.jpa.adapter;
 import com.pragma.powerup.infrastructure.output.jpa.entity.CapacityTechnologyEntity;
 import com.pragma.powerup.infrastructure.output.jpa.mapper.ICapacityTechnologyEntityMapper;
 import com.pragma.powerup.infrastructure.output.jpa.repository.ICapacityTechnologyRepository;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

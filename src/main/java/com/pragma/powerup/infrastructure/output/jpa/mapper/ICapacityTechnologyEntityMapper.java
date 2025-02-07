@@ -1,9 +1,7 @@
 package com.pragma.powerup.infrastructure.output.jpa.mapper;
 
 import com.pragma.powerup.domain.model.CapacityTechnology;
-import com.pragma.powerup.domain.model.Technology;
 import com.pragma.powerup.infrastructure.output.jpa.entity.CapacityTechnologyEntity;
-import com.pragma.powerup.infrastructure.output.jpa.entity.TechnologyEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;

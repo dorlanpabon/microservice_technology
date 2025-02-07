@@ -1,7 +1,6 @@
 package com.pragma.powerup.infrastructure.output.jpa.adapter;
 
 import com.pragma.powerup.domain.spi.ICapacityTechnologyPersistencePort;
-import com.pragma.powerup.infrastructure.output.jpa.entity.CapacityTechnologyEntity;
 import com.pragma.powerup.infrastructure.output.jpa.mapper.ICapacityTechnologyEntityMapper;
 import com.pragma.powerup.infrastructure.output.jpa.repository.ICapacityTechnologyRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,4 +22,5 @@ public class CapacityTechnologyJpaAdapter implements ICapacityTechnologyPersiste
                 .flatMap(capacityTechnologyRepository::save)
                 .then();
     }
+
 }

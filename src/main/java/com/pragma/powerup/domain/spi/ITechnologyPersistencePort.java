@@ -11,4 +11,6 @@ public interface ITechnologyPersistencePort {
     Mono<Technology> findTechnologyByName(String name);
 
     Flux<Technology> listTechnologies(Integer page, Integer size, String direction);
+
+    Flux<Technology> findTechnologiesByCapacity(Long id);
 }

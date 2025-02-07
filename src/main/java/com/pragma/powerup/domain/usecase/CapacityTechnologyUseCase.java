@@ -27,4 +27,5 @@ public class CapacityTechnologyUseCase implements ICapacityTechnologyServicePort
                 .switchIfEmpty(Mono.error(new DomainException(DomainConstants.INVALID_TECHNOLOGY_COUNT)))
                 .flatMap(validList -> capacityTechnologyPersistencePort.saveTechnologiesCapacity(capacityId, validList));
     }
+
 }

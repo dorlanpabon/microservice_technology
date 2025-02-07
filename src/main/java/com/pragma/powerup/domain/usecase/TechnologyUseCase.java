@@ -33,4 +33,9 @@ public class TechnologyUseCase implements ITechnologyServicePort {
     public Flux<Technology> listTechnologies(Integer page, Integer size, String direction) {
         return technologyPersistencePort.listTechnologies(page, size, direction);
     }
+
+    @Override
+    public Flux<Technology> findTechnologiesByCapacity(Long id) {
+        return technologyPersistencePort.findTechnologiesByCapacity(id);
+    }
 }

@@ -1,7 +1,5 @@
 package com.pragma.powerup.domain.spi;
 
-import com.pragma.powerup.domain.model.CapacityTechnology;
-import com.pragma.powerup.domain.model.Technology;
 import reactor.core.publisher.Mono;
 
 import java.util.List;

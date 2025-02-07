@@ -1,7 +1,6 @@
 package com.pragma.powerup.application.handler.impl;
 
 import com.pragma.powerup.domain.api.ICapacityTechnologyServicePort;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

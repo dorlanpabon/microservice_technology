@@ -22,4 +22,5 @@ public class TechnologyEntity {
 
     @Column("description")
     private String description;
+
 }

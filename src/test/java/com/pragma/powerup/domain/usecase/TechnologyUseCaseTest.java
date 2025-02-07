@@ -128,4 +128,17 @@ class TechnologyUseCaseTest {
 
         verify(technologyPersistencePort, times(1)).listTechnologies(1, 10, "ASC");
     }
+
+    @Test
+    void testFindTechnologiesByCapacity() {
+        when(technologyPersistencePort.findTechnologiesByCapacity(anyLong())).thenReturn(Flux.just(technology));
+
+        Flux<Technology> result = technologyUseCase.findTechnologiesByCapacity(1L);
+
+        StepVerifier.create(result)
+                .expectNext(technology)
+                .verifyComplete();
+
+        verify(technologyPersistencePort, times(1)).findTechnologiesByCapacity(1L);
+    }
 }

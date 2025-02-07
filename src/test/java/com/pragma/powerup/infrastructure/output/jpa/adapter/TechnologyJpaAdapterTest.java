@@ -83,4 +83,18 @@ class TechnologyJpaAdapterTest {
 
         verify(technologyRepository, times(1)).findBy(any());
     }
+
+    @Test
+    void testFindTechnologiesByCapacity() {
+        when(technologyRepository.findByCapacityId(anyLong())).thenReturn(Flux.just(technologyEntity));
+        when(technologyEntityMapper.toTechnology(any(TechnologyEntity.class))).thenReturn(technology);
+
+        Flux<Technology> result = technologyJpaAdapter.findTechnologiesByCapacity(1L);
+
+        StepVerifier.create(result)
+                .expectNext(technology)
+                .verifyComplete();
+
+        verify(technologyRepository, times(1)).findByCapacityId(1L);
+    }
 }

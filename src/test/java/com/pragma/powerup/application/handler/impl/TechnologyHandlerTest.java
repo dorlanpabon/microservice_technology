@@ -87,4 +87,19 @@ class TechnologyHandlerTest {
         verify(technologyServicePort, times(1)).listTechnologies(1, 10, "ASC");
         verify(technologyResponseMapper, times(1)).toTechnologyResponseDto(technology);
     }
+
+    @Test
+    void testFindTechnologiesByCapacity() {
+        when(technologyServicePort.findTechnologiesByCapacity(1L)).thenReturn(Flux.just(technology));
+        when(technologyResponseMapper.toTechnologyResponseDto(technology)).thenReturn(technologyResponseDto);
+
+        Flux<TechnologyResponseDto> result = technologyHandler.findTechnologiesByCapacity(1L);
+
+        StepVerifier.create(result)
+                .expectNext(technologyResponseDto)
+                .verifyComplete();
+
+        verify(technologyServicePort, times(1)).findTechnologiesByCapacity(1L);
+        verify(technologyResponseMapper, times(1)).toTechnologyResponseDto(technology);
+    }
 }

@@ -77,4 +77,17 @@ class TechnologyRestControllerTest {
 
         verify(technologyHandler, times(1)).listTechnologies(any());
     }
+
+    @Test
+    void testFindTechnologiesByCapacity() {
+        when(technologyHandler.findTechnologiesByCapacity(1L)).thenReturn(Flux.just(technologyResponseDto));
+
+        Flux<TechnologyResponseDto> result = technologyRestController.findTechnologiesByCapacity(1L);
+
+        assertNotNull(result);
+
+        result.subscribe(response -> assertEquals("Todo", response.getName()));
+
+        verify(technologyHandler, times(1)).findTechnologiesByCapacity(1L);
+    }
 }

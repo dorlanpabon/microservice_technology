@@ -13,8 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -35,6 +33,12 @@ public class TechnologyHandler implements ITechnologyHandler {
     @Override
     public Flux<TechnologyResponseDto> listTechnologies(TechnologyPageRequestDto technologyPageRequestDto) {
         return technologyServicePort.listTechnologies(technologyPageRequestDto.getPage(), technologyPageRequestDto.getSize(), technologyPageRequestDto.getDirection())
+                .map(technologyResponseMapper::toTechnologyResponseDto);
+    }
+
+    @Override
+    public Flux<TechnologyResponseDto> findTechnologiesByCapacity(Long id) {
+        return technologyServicePort.findTechnologiesByCapacity(id)
                 .map(technologyResponseMapper::toTechnologyResponseDto);
     }
 

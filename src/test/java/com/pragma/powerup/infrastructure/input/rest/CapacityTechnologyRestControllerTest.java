@@ -1,7 +1,6 @@
 package com.pragma.powerup.infrastructure.input.rest;
 
 import com.pragma.powerup.application.handler.ICapacityTechnologyHandler;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

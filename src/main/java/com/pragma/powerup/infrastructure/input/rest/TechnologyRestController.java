@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,7 +19,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping("/technology")
@@ -46,4 +46,12 @@ public class TechnologyRestController {
         return technologyHandler.listTechnologies(technologyPageRequestDto);
     }
 
+    @Operation(summary = "List of technologies by capacity")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "List of technologies", content = @Content)
+    })
+    @GetMapping("/{id}")
+    public Flux<TechnologyResponseDto> findTechnologiesByCapacity(@PathVariable Long id) {
+        return technologyHandler.findTechnologiesByCapacity(id);
+    }
 }

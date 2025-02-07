@@ -37,4 +37,10 @@ public class TechnologyJpaAdapter implements ITechnologyPersistencePort {
         return technologyRepository.findBy(pageable)
                         .map(technologyEntityMapper::toTechnology);
     }
+
+    @Override
+    public Flux<Technology> findTechnologiesByCapacity(Long id) {
+        return technologyRepository.findByCapacityId(id)
+                .map(technologyEntityMapper::toTechnology);
+    }
 }
